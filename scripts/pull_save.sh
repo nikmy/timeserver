@@ -1,6 +1,6 @@
 #!/bin/bash
 
 while(true); do
-  curl "http://timeservice/statistics" > stats.txt
+  curl "http://timeserver/statistics" > stats.txt
   sleep 5
 done
