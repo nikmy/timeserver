@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: timeserver
+  labels:
+    app: timeserver
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: timeserver
@@ -17,8 +19,8 @@ spec:
           image: myink/time_server:latest
           ports:
             - containerPort: 8080
-        - name: timeserver-stats
-          image: myink/statistics_script:latest
+              protocol: TCP
+              name: http
 
 ---
 
@@ -30,8 +32,9 @@ metadata:
     run: timeserver
 spec:
   ports:
-  - port: 8080
+  - port: 80
     protocol: TCP
+    targetPort: 8080
   selector:
     app: timeserver
-  type: NodePort
+  type: LoadBalancer

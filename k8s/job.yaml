@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  - name: timeserver-stats
+spec:
+  template:
+    metadata:
+      - name: timeserver-stats
+    spec:
+      containers:
+        - name: timeserver-stats
+          image: myink/statistics_script:latest
+      restartPolicy: Never
