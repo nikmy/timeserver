@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y curl dos2unix
+
+WORKDIR /scripts
+COPY ./scripts/pull_save.sh /scripts/pull_save.sh
+RUN dos2unix ./pull_save.sh
+
+CMD ["/scripts/pull_save.sh"]

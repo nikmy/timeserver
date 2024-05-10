@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timeserver
+  labels:
+    app: timeserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timeserver
+  template:
+    metadata:
+      labels:
+        app: timeserver
+    spec:
+      containers:
+        - name: timeserver
+          image: myink/time_server:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: http
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: timeserver
+  labels:
+    run: timeserver
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: timeserver
+  type: LoadBalancer
