@@ -1,5 +1,16 @@
 # K8s TimeService
 
+---
+
 Для сборки и запуска нужно выполнить `k8s/build_and_deploy.sh`.  
 Для получения ссылки сервиса через `minikube` выполняем
-`minikube service timeserver`.
+`minikube service timeserver` и идём в одну из ручек:
+- `/time` — возвращает JSON с текущим временем
+- `/statictics` — возвращает количество запросов к `time`
+
+---
+
+Для того чтобы посмотреть на собранные prometheus метрики,
+выполняем `minikube service promstats`, и на полученный адрес
+идём в ручку `/metrics` (например: получили `127.0.0.1:53044`,
+значит запрос делаем на `127.0.0.1:53044/metrics`).

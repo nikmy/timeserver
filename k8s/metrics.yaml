@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics
+  labels:
+    app: metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics
+  template:
+    metadata:
+      labels:
+        app: metrics
+    spec:
+      containers:
+        - name: metrics
+          image: myink/timeserver_stats_exporter:latest
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+              name: http
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: promstats
+  labels:
+    run: metrics
+spec:
+  ports:
+    - port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app: metrics
+  type: LoadBalancer
+
+---
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: metrics
+  labels:
+    team: frontend
+spec:
+  selector:
+    matchLabels:
+      app: metrics
+  endpoints:
+    - port: http
