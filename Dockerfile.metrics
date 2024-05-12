@@ -1,0 +1,11 @@
+FROM golang:1.22.1-alpine
+
+WORKDIR /app
+
+ADD . .
+
+RUN go build ./cmd/metrics/
+RUN rm go.mod
+
+EXPOSE 8000
+ENTRYPOINT [ "./metrics", "-port=8000", "-service=http://timeserver" ]

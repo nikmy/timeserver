@@ -7,7 +7,8 @@ import (
 	"os/signal"
 
 	"github.com/gofiber/fiber/v3/log"
-	"github/nikmy/timeserver/internal/timeserver"
+
+	"github.com/nikmy/timeserver/internal/timeserver"
 )
 
 func main() {
